@@ -22,6 +22,7 @@ import datetime as dt
 import yfinance as yf
 import profile2
 import about
+import technical
 
 
 
@@ -444,6 +445,7 @@ elif menubar == 'News':
             col1.write("")  # this makes the empty column show up on mobile
         col2.write(f"Page {1 + st.session_state.page2} of {5}")
 elif menubar == 'Technical Indicators':
+    technical.Scrappy(asset)
     st.subheader("Simple Moving Average Chart")
     linechart = st.beta_container()
     with linechart:
