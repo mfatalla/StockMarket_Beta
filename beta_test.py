@@ -1,11 +1,7 @@
 import requests
-import lxml.html as lh
 from bs4 import BeautifulSoup
-from plotly.subplots import make_subplots
-import plotly.graph_objects as go
 import streamlit as st
 import pandas as pd
-import numpy as np
 import yfinance as yf
 import profile2
 import about

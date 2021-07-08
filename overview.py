@@ -9,6 +9,10 @@ import numpy as np
 import yfinance as yf
 
 def Overview(asset):
+
+    ticker = yf.Ticker(asset)
+    info = ticker.info
+    
     left, right = st.beta_columns([1, 1])
     with left:
         st.write("")
