@@ -16,7 +16,7 @@ def Overview(asset):
     def candle(asset):
         st.subheader('Market Profile Chart (US S&P 500)')
 
-        candle_ex = st.beta_expander()
+        candle_ex = st.beta_expander("Candlestick Chart Settings", expanded=True)
         with candle_ex:
             intervalList = ["1m", "5m", "15m", "30m"]
             interval_candle = st.selectbox(
