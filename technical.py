@@ -16,6 +16,7 @@ from statsmodels.tsa.arima_model import ARIMA
 from pmdarima.arima import auto_arima
 from sklearn.metrics import mean_squared_error, mean_absolute_error
 import math
+import numpy as np
 
 
 def Scrappy(tickerinput):
@@ -254,49 +255,7 @@ def Scrappy(tickerinput):
     figBoll.update_yaxes(tickprefix="$")
     st.plotly_chart(figBoll, use_container_width=True)
 
-    st.subheader("Simple Moving Average Chart")
-    linechart = st.beta_container()
-    with linechart:
-        linechart_expander = st.beta_expander(label='Line Chart Settings')
-        with linechart_expander:
-            ticker = yf.Ticker(asset)
-            info = ticker.info
-            attri = ['SMA', 'SMA2']
-            attributes = st.multiselect(
-                'Choose Chart Attributes [SMA, SMA2]',
-                attri,
-                default='SMA'
-            )
-            data0 = load_quotes(asset)
-            data = data0.copy().dropna()
-            data.index.name = None
-            section = st.slider(
-                "Number of quotes",
-                min_value=30,
-                max_value=min([2000, data.shape[0]]),
-                value=500,
-                step=10,
-            )
-            data2 = data[-section:]["Adj Close"].to_frame("Adj Close")
-            if "SMA" in attributes:
-                period = st.slider(
-                    "SMA period", min_value=5, max_value=500, value=20, step=1
-                )
-                data[f"SMA {period}"] = data["Adj Close"].rolling(period).mean()
-                data2[f"SMA {period}"] = data[f"SMA {period}"].reindex(data2.index)
-            if "SMA2" in attributes:
-                period2 = st.slider(
-                    "SMA2 period", min_value=5, max_value=500, value=100, step=1
-                )
-                data[f"SMA2 {period2}"] = data["Adj Close"].rolling(period2).mean()
-                data2[f"SMA2 {period2}"] = data[f"SMA2 {period2}"].reindex(data2.index)
-        st.subheader("Chart")
-        st.line_chart(data2, height=700)
-        if st.checkbox("View quotes"):
-            st.subheader(f"{asset} historical data")
-            st.write(data2)
 
-    tech_2 = st.beta_container
 
     predict_chart = st.beta_container()
     with predict_chart:
@@ -317,7 +276,7 @@ def Scrappy(tickerinput):
         intervalT = history_args["interval"]
         periodT = history_args["period"]
 
-        ticker_input_2 = yf.Ticker(asset)
+        ticker_input_2 = yf.Ticker(tickerinput)
         datatest = ticker_input_2.history(period=periodT, interval=intervalT)
 
         line_fig = plt.figure(figsize=(10, 6))
@@ -325,7 +284,7 @@ def Scrappy(tickerinput):
         plt.xlabel('Dates')
         plt.ylabel('Close Prices')
         plt.plot(datatest['Close'])
-        plt.title((asset) + ' closing price')
+        plt.title((tickerinput) + ' closing price')
 
         st.subheader("Figure1")
         st.pyplot(line_fig)
