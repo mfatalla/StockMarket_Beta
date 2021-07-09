@@ -301,7 +301,7 @@ def stock_predict(tickerinput):
         st.subheader("Accuracy Metrics")
         st.table(final_tab)
 
-        submitted = st.form_submit_button(label='Submit')
+        submitted = st.form_submit_button(label='Hey')
         if submitted:
             st.write("WAP")
 
