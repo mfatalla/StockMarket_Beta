@@ -257,6 +257,9 @@ def stock_predict(tickerinput):
         plt.ylabel('Actual Stock Price')
         plt.legend(loc='upper left', fontsize=8)
 
+        st.write(train_data)
+        st.write(test_data)
+        st.write(fc_series)
         # report performance
         mse = mean_squared_error(test_data, fc)
 
@@ -266,8 +269,6 @@ def stock_predict(tickerinput):
 
         mape = np.mean(np.abs(fc - test_data) / np.abs(test_data))
 
-        st.dataframe(test_data)
-        st.dataframe(fc_series)
 
         P1_1, P1_2, P1_3 = st.beta_columns([1,3,1])
         with P1_1:
