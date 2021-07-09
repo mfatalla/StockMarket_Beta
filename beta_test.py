@@ -70,22 +70,19 @@ with sidebar_components:
     soup = BeautifulSoup(response.text, 'lxml')
     name = soup.find('h1', {'class': 'sa-h1'}).text
     price = soup.find('span', {'id': 'cpr'}).text
-    currency = soup.find('span', {'id': 'cpr'}).find_next('span').text
+    currency = soup.find('span', {'class': 'scurr'}).text
     change = soup.find('span', {'id': 'spd'}).text
-    rate = soup.find('span', {'id': 'spd'}).find_next('span').text
     meta = soup.find('div', {'id': 'sti'}).find('span').text
     try:
-        after = soup.find('div', {'id': 'ext'}).find_next('span').text
+        price2 = soup.find('span', {'id': 'extpr'}).text
         after2 = soup.find('span', {'id': 'extc'}).text
         aftert = soup.find('span', {'id': 'extcp'}).text
         aftertime = soup.find('span', {'id': 'exttime'}).text
-        CR = change + " (" + rate + ")"
-        CT = after2 + " (" + aftert + ")"
         sub = change
         sub2 = after2
         aye = ": After-hours"
     except AttributeError as attriErr:
-        after = "NO DATA"
+        price2 = "NO DATA"
         after2 = "NO DATA"
         aftert = "NO DATA"
         aftertime = "NO DATA"
@@ -108,26 +105,29 @@ with sidebar_components:
             unsafe_allow_html=True)
         if sub != "NO DATA" and sub2 != "NO DATA":
             if float(sub) > 0:
-                aye2 = "+"
+                rate = soup.find('span', {'id': 'spcol', 'class': 'sp_green'}).text
                 st.markdown(
-                    f"<p style='vertical-align:bottom;font-weight: bold; color: #00AC4A;font-size: 13px;'>{aye2 + CR}</p>",
+                    f"<p style='vertical-align:bottom;font-weight: bold; color: #00AC4A;font-size: 13px;'>{rate}</p>",
                     unsafe_allow_html=True)
             else:
+                rate = soup.find('span', {'id': 'spcol', 'class': 'sp_red'}).text
                 st.markdown(
-                    f"<p style='vertical-align:bottom;font-weight: bold; color: #D10000;font-size: 13px;'>{CR}</p>",
+                    f"<p style='vertical-align:bottom;font-weight: bold; color: #D10000;font-size: 13px;'>{rate}</p>",
                     unsafe_allow_html=True)
             st.markdown(
                 f"<p style='vertical-align:bottom;font-weight: italic; color: #FFFFFF;font-size: 10px;'>{meta}</p>",
                 unsafe_allow_html=True)
             if float(sub2) > 0:
-                st.markdown(after + " " + currency)
+                st.markdown(price2 + " " + currency)
+                rate2 = soup.find('span', {'id': 'extcol', 'class': 'sp_green'}).text
                 st.markdown(
-                    f"<p style='vertical-align:bottom;font-weight: bold; color: #00AC4A;font-size: 13px;'>{CT + aye}</p>",
+                    f"<p style='vertical-align:bottom;font-weight: bold; color: #00AC4A;font-size: 13px;'>{rate2}</p>",
                     unsafe_allow_html=True)
             else:
-                st.markdown(after + " " + currency)
+                st.markdown(price2 + " " + currency)
+                rate2 = soup.find('span', {'id': 'extcol', 'class': 'sp_red'}).text
                 st.markdown(
-                    f"<p style='vertical-align:bottom;font-weight: bold; color: #D10000;;font-size: 13px;'>{CT + aye}</p>",
+                    f"<p style='vertical-align:bottom;font-weight: bold; color: #D10000;;font-size: 13px;'>{rate2}</p>",
                     unsafe_allow_html=True)
             st.markdown(
                 f"<p style='vertical-align:bottom;font-weight: italic; color: #FFFFFF;font-size: 10px;'>{aftertime}</p>",
