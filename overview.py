@@ -148,7 +148,7 @@ def Overview(asset):
                 side="right"
             )
         )
-        fig_candle.update_yaxes(nticks=20)
+        fig_candle.update_yaxes(nticks=5)
         fig_candle.update_yaxes(side="right")
         fig_candle.update_layout(height=800)
 
