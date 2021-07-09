@@ -153,7 +153,7 @@ def stock_predict(tickerinput):
                 output['critical value (%s)' % key] = values
 
         result = seasonal_decompose(df_close, model='multiplicative', freq=1)
-        summary_fig2 = plt.figure()
+        summary_fig = plt.figure()
         summary_fig = result.plot()
         summary_fig.set_size_inches(16, 9)
         st.subheader("Figure 3")
@@ -168,7 +168,7 @@ def stock_predict(tickerinput):
         plt.plot(std_dev, color="black", label="Standard Deviation")
         plt.plot(moving_avg, color="red", label="Mean")
         plt.legend()
-        st.pyplot(summary_fig2)
+        st.pyplot(rcParams)
 
 
     with part4:
