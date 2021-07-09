@@ -270,7 +270,7 @@ def Scrappy(tickerinput):
         periodT, intervalsT = st.beta_columns(2)
         with periodT:
             history_args["period"] = st.selectbox(
-                "Select Period", options=Ticker.PERIODS, index=8  # pylint: disable=protected-access
+                "Select Period", options=Ticker.PERIODS, index=5  # pylint: disable=protected-access
             )
             fname = st.text_input('Enter here: FILENAME_' + tickerinput+ ".csv")
         with intervalsT:
@@ -308,15 +308,12 @@ def Scrappy(tickerinput):
         plt.ylabel('Close Prices')
         plt.plot(datatest['Close'])
         plt.title((tickerinput) + ' closing price')
-
-
-
+        plt.pyplot(line_fig)
         df_close = datatest['Close']
         df_close.plot(style='k.')
         plt.title('Scatter plot of closing price')
-
         scatter_fig = line_fig
-
+        
         part1_1, part1_2 = st.beta_columns(2)
         with part1_1:
             st.subheader("Figure1")
