@@ -287,7 +287,6 @@ def Scrappy(tickerinput):
 
         st.subheader("Figure1")
         st.pyplot(line_fig)
-        st.line_chart(line_fig)
 
         df_close = datatest['Close']
         df_close.plot(style='k.')
