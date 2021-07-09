@@ -14,7 +14,6 @@ import math
 import numpy as np
 import pandas as pd
 import base64
-from yahooquery import Ticker
 
 tickerinput = 'NFLX'
 
