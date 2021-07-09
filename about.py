@@ -35,7 +35,7 @@ def About():
                 f"<p style='text-align: center; color: #FFFFFF;font-size: 20px;'>{dev11}</p>",
                 unsafe_allow_html=True)
             dev_email = "(" + dev_email + ")"
-            aye = '[EMAIL]' + dev_email
+            aye = '[c_oloap@forecaststockmarket.tech]' + dev_email
             st.markdown(aye, unsafe_allow_html=True)
         with img4:
             st.image('data//developer1.png')
@@ -68,7 +68,7 @@ def About():
                 f"<p style='text-align: center; color: #FFFFFF;font-size: 20px;'>{dev31}</p>",
                 unsafe_allow_html=True)
             dev_email = "(" + dev_email + ")"
-            aye = '[EMAIL]' + dev_email
+            aye = '[kenngxx@forecaststockmarket.tech]' + dev_email
             st.markdown(aye, unsafe_allow_html=True)
 
         with img1:
@@ -90,9 +90,13 @@ def About():
         st.subheader("Requirements")
         st.table(requirements)
     st.write("")
-    git_hub = st.beta_expander("Git Hub", expanded=False)
+    git_hub = st.beta_expander("Project Host ", expanded=False)
     with git_hub:
         git_hub_link2 = 'https://github.com/mfatalla/StockMarket_Beta'
         git_hub_link2 = '(' + git_hub_link2 + ')'
-        git_hub_link_p = '[EMAIL]' + git_hub_link2
+        git_hub_link_p = '[https://github.com/mfatalla/StockMarket_Beta]' + git_hub_link2
         st.markdown(git_hub_link_p, unsafe_allow_html=True)
+        streamlit_link = 'https://share.streamlit.io/mfatalla/stockmarket_beta/main/beta_test.py'
+        streamlit_link = '(' + streamlit_link + ')'
+        streamlit_link_p = '[https://share.streamlit.io/mfatalla/stockmarket_beta/main/beta_test.py]' + streamlit_link
+        st.markdown(streamlit_link_p, unsafe_allow_html=True)
