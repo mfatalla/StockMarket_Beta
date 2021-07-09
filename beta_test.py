@@ -39,7 +39,7 @@ def label(symbol):
 
 components = load_data()
 
-menu = ['Overview', 'News', 'Technical Indicators','Company Profile', 'About']
+menu = ['Overview', 'News', 'Technical Indicators','Stock Prediction','Company Profile', 'About']
 query_params = st.experimental_get_query_params()
 default = int(query_params["menubar"][0]) if "menubar" in query_params else 0
 menubar = st.selectbox(
@@ -97,6 +97,8 @@ elif menubar == 'News':
 elif menubar == 'Technical Indicators':
     technical.Scrappy(asset)
 
+elif menubar == 'Stock Prediction':
+    stock_prediction.stock_predict(asset)
 elif menubar == 'Company Profile':
     profile2.Profile(asset)
 
