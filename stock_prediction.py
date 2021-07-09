@@ -286,7 +286,7 @@ def stock_predict(tickerinput):
         v3 = 100.0 - float(Frmse)
         v4 = 100.0 - float(Fmape)
         first_col_1 = ['Mean Square Error', 'Mean Absolute Error', 'Root Mean Square Error', 'Mean Absolute Percetage Error']
-        second_col_1 = [v1+' %',v2+' %',v3+' %',v4+' %']
+        second_col_1 = [str(v1)+' %',str(v2)+' %',str(v3)+' %',str(v4)+' %']
         third_col_1 = [Fmse+' %',Fmae+' %',Frmse+' %',Fmape+' %']
         requirements = pd.DataFrame(
             {"Accuracy Metric": list(first_col_1), "Percentage Error": list(third_col_1),"Accuracy Rate": list(second_col_1)})
