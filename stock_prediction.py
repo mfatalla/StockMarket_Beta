@@ -290,15 +290,15 @@ def stock_predict(tickerinput):
         Fmape = '{0:.3f}'.format(mape)
         st.write('MAPE: '+Fmape)
 
-        mylist_1 = ['1','2']
-        mylist_2 = ['3','4']
-        mylist_3 = ['5','6']
-        mylist_4 = ['7','8']
+        mylist_1 = ['Mean Square Error','Mean Absolute Error','Root Mean Square Error','Mean Absoulute Percentage Error']
+        mylist_2 = [' ',' ']
+        mylist_3 = [mse,mae,rmse,mape]
+        mylist_4 = [' ',' ']
 
         final_tab = pd.DataFrame(
-            {"Value1": list(mylist_1),"Value2": list(mylist_2), "Value3": list(mylist_3), "Value4": list(mylist_4)})
+            {"Value1": list(mylist_1),"Value2": list(mylist_2), "Value3": list(mylist_3)})
         final_tab.index = [""] * len(final_tab)
-        st.subheader("Summary")
+        st.subheader("Accuracy Metrics")
         st.table(final_tab)
 
         submitted = st.form_submit_button(label='Submit')
