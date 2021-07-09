@@ -1,4 +1,6 @@
 import streamlit as st
+import datetime as dt
+import yfinance as yf
 import warnings
 warnings.filterwarnings('ignore')
 import matplotlib.pyplot as plt
@@ -13,8 +15,7 @@ import numpy as np
 import pandas as pd
 import base64
 from yahooquery import Ticker
-import datetime as dt
-import yfinance as yf
+
 
 def stock_predict(tickerinput):
 
@@ -59,23 +60,20 @@ def stock_predict(tickerinput):
         st.markdown(tmp_download_link, unsafe_allow_html=True)
 
 
+
     line_fig = plt.figure(figsize=(10, 6))
     plt.grid(True)
     plt.xlabel('Dates')
     plt.ylabel('Close Prices')
     plt.plot(datatest['Close'])
     plt.title((tickerinput) + ' closing price')
-    st.subheader("Figure1")
-    st.pyplot(line_fig)
 
     df_close = datatest['Close']
     df_close.plot(style='k.')
     plt.title('Scatter plot of closing price')
     scatter_fig = line_fig
-    st.subheader("Figure 2")
-    st.pyplot(scatter_fig)
 
-    # Test for staionarity
+
     def test_stationarity(timeseries):
         # Determing rolling statistics
         rolmean = timeseries.rolling(12).mean()
@@ -111,8 +109,8 @@ def stock_predict(tickerinput):
     plt.plot(std_dev, color="black", label="Standard Deviation")
     plt.plot(moving_avg, color="red", label="Mean")
     plt.legend()
-    st.subheader("Figure 3")
-    st.pyplot(summary_fig)
+
+
     # split data into train and training set
     train_data, test_data = df_log[3:int(len(df_log) * 0.9)], df_log[int(len(df_log) * 0.9):]
     predict_fig = plt.figure(figsize=(10, 6))
@@ -122,8 +120,7 @@ def stock_predict(tickerinput):
     plt.plot(df_log, 'green', label='Train data')
     plt.plot(test_data, 'blue', label='Test data')
     plt.legend()
-    st.subheader("Figure 4")
-    st.pyplot(predict_fig)
+
 
     model_autoARIMA = auto_arima(train_data, start_p=0, start_q=0,
                                  test='adf',  # use adftest to find             optimal 'd'
@@ -150,7 +147,7 @@ def stock_predict(tickerinput):
     fc_series = pd.Series(fc, index=test_data.index)
     lower_series = pd.Series(conf[:, 0], index=test_data.index)
     upper_series = pd.Series(conf[:, 1], index=test_data.index)
-    wap = plt.figure(figsize=(12, 5), dpi=100)
+    fig_6 = plt.figure(figsize=(12, 5), dpi=100)
     plt.plot(train_data, label='training')
     plt.plot(test_data, color='blue', label='Actual Stock Price')
     plt.plot(fc_series, color='orange', label='Predicted Stock Price')
@@ -160,10 +157,6 @@ def stock_predict(tickerinput):
     plt.xlabel('Time')
     plt.ylabel('Actual Stock Price')
     plt.legend(loc='upper left', fontsize=8)
-    st.pyplot(wap)
-
-
-
 
 
     # report performance
@@ -175,3 +168,29 @@ def stock_predict(tickerinput):
     st.write('RMSE: ' + str(rmse))
     mape = np.mean(np.abs(fc - test_data) / np.abs(test_data))
     st.write('MAPE: ' + str(mape))
+
+
+    
+    part1, part2 = st.beta_columns(2)
+    with part1:
+        st.subheader("Figure1")
+        st.pyplot(line_fig)
+    with part2:
+        st.subheader("Figure 2")
+        st.pyplot(scatter_fig)
+
+    part3, part4 = st.beta_columns(2)
+    with part3:
+        st.subheader("Figure 3")
+        st.pyplot(summary_fig)
+    with part4:
+        st.subheader("Figure 4")
+        st.pyplot(predict_fig)
+
+    part5, part6 = st.beta_columns(2)
+    with part5:
+        st.subheader("Figure 5")
+        st.write(fig_5)
+    with part6:
+        st.subheader("Figure 6")
+        st.pyplot(fig_6)
