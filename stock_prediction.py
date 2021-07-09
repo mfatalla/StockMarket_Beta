@@ -168,7 +168,7 @@ def stock_predict(tickerinput):
         plt.plot(std_dev, color="black", label="Standard Deviation")
         plt.plot(moving_avg, color="red", label="Mean")
         plt.legend()
-        st.pyplot(df_log)
+        st.pyplot(rcParams['figure.figsize'])
 
 
     with part4:
