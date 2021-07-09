@@ -35,7 +35,7 @@ def News(asset):
     trend_today = st.beta_expander("Trending Today", expanded=True)
     with trend_today:
 
-        col1, col2, col3, _ = st.beta_columns(3)
+        col1, col2, col3 = st.beta_columns(3)
         with col1:
             trend_url = 'https://stockanalysis.com/news/all-stocks/'
             trend_page = requests.get(trend_url)
