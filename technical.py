@@ -279,7 +279,7 @@ def Scrappy(tickerinput):
         ticker_input_2 = yf.Ticker(tickerinput)
         datatest = ticker_input_2.history(period=periodT, interval=intervalT)
 
-        line_fig = plt.figure(figsize=(1, 1))
+        line_fig = plt.figure(figsize=(.1, .1))
         plt.grid(True)
         plt.xlabel('Dates')
         plt.ylabel('Close Prices')
