@@ -29,14 +29,14 @@ def stock_predict(tickerinput):
         "end": None,
     }
 
-    periodT, intervalsT = st.beta_columns(2)
+    p1,periodT, intervalsT,p4 = st.beta_columns(4)
+    with p1:
+        st.write("")
     with periodT:
-
         v_T = ['6mo', '1y', '2y', '5y']
         history_args["period"] = st.selectbox(
             "Select Period", options=v_T, index=2
         )
-
         periodT_2 = history_args["period"]
         if periodT_2 == '6mo':
             v_I = ['1h', '1d']
@@ -51,10 +51,11 @@ def stock_predict(tickerinput):
             v_I = ['1d', '1wk', '1mo', '3mo']
 
     with intervalsT:
-
         history_args["interval"] = st.selectbox(
             "Select Interval", options=v_I, index=0
         )
+    with p4:
+        st.write("")
     intervalT = history_args["interval"]
     periodT = history_args["period"]
 
@@ -87,7 +88,7 @@ def stock_predict(tickerinput):
 
     ticker_input_2 = yf.Ticker(tickerinput)
     datatest = ticker_input_2.history(period=periodT, interval=intervalT)
-    st.dataframe(datatest, width=600)
+    st.dataframe(datatest, width=1000)
     fname = st.text_input('Enter here: FILENAME_' + tickerinput + ".csv")
 
     def download_link(object_to_download, download_filename, download_link_text):
