@@ -8,13 +8,6 @@ def About():
         st.write("Stock Market Forecasting")
         message = 'The project, created by Slapsoils, is a stock market forecasting software that addresses the dimensionality and expectancy of a new investor. Since stock markets are unpredictable as the fluctuations in the prices over time depend on several factors, the view towards the stock market among the society is that it is highly risky for investment or not suitable for trade which causes people or novice investors to doubt and lose interest to invest. With the use of python package: yfinance and yahooquery, and web scraping, Slapsoils created a python-based software that can analyze, model, and forecast the trends and macro-fluctuations of the stock market based on the gathered Data.'
         st.info(message)
-        q1, q2, q3 = st.beta_columns([1, 1, 1])
-        with q1:
-            st.write("")
-        with q3:
-            st.write("")
-        with q2:
-            st.image('data//logo1.png',height=400)
 
     st.write("")
     developer_ex = st.beta_expander("Developer", expanded=False)
