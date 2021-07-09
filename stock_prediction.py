@@ -92,7 +92,7 @@ def stock_predict(tickerinput):
 
     fname = st.text_input('Enter here: FILENAME_' + tickerinput + ".csv")
     aye = datatest.index
-    st.dataframe(aye)
+    st.dataframe(aye['Date'])
 
     def download_link(object_to_download, download_filename, download_link_text):
 
