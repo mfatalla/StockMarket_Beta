@@ -95,7 +95,7 @@ def stock_predict(tickerinput):
         st.write("")
     with p2:
         st.dataframe(datatest, width=1000)
-        fname = st.text_input('Enter here: FILENAME_' + tickerinput + ".csv")
+        fname = st.text_input('Enter here: "FILENAME"_' + tickerinput + ".csv")
 
         def download_link(object_to_download, download_filename, download_link_text):
 
