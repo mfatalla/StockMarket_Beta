@@ -112,7 +112,7 @@ def News(asset):
                 trend_row_data = [trend_td.text.strip() for trend_td in trend_data]
                 trend_length = len(trend_df)
                 trend_df.loc[trend_length] = trend_row_data
-            sub_head1 = 'Top Gainers'
+            sub_head1 = 'Top Losers'
             st.markdown(
                 f"<p style='vertical-align:bottom;font-weight: bold; color: #D10000;font-size: 20px;'>{sub_head1}</p>",
                 unsafe_allow_html=True)
