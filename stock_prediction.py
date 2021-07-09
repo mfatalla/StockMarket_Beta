@@ -124,6 +124,15 @@ def stock_predict(tickerinput):
     with P1_3:
         st.write("")
 
+    P1_1, P1_2, P1_3 = st.beta_columns([1,3,1])
+    with P1_1:
+        st.write("")
+    with P1_2:
+        st.subheader("Figure1")
+        st.pyplot(line_fig)
+    with P1_3:
+        st.write("")
+
     df_close = datatest['Close']
     df_close.plot(style='k.')
     plt.title('Scatter plot of closing price')
