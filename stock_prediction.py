@@ -283,10 +283,10 @@ def stock_predict(tickerinput):
         Fmape = '{0:.2f}'.format(mape)
 
         first_col_1 = ['Mean Square Error', 'Mean Absolute Error', 'Root Mean Square Error', 'Mean Absolute Percetage Error']
-        second_col_1 = [mse,mae,rmse,mape]
+        second_col_1 = [100-mse+' %',100-mae+' %',100-rmse+' %',100-mape+' %']
         third_col_1 = [Fmse+' %',Fmae+' %',Frmse+' %',Fmape+' %']
         requirements = pd.DataFrame(
-            {"Accuracy Metric": list(first_col_1), "Percentage Error": list(second_col_1),"Accuracy Rate": list(third_col_1)})
+            {"Accuracy Metric": list(first_col_1), "Percentage Error": list(third_col_1),"Accuracy Rate": list(second_col_1)})
         requirements.index = [""] * len(requirements)
 
         st.write("")
