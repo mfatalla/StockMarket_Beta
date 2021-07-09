@@ -217,8 +217,8 @@ def stock_predict(tickerinput):
     st.write('MAPE: ' + str(mape))
 
 
-    answer = str(mse, 2)
-    st.write(answer)
+    Fmse = '{0:.2f}'.format(mse)
+    st.write(Fmse)
 
 
 
