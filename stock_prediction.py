@@ -88,11 +88,17 @@ def stock_predict(tickerinput):
 
     ticker_input_2 = yf.Ticker(tickerinput)
     datatest = ticker_input_2.history(period=periodT, interval=intervalT)
-    st.dataframe(datatest, width=1000)
 
-    fname = st.text_input('Enter here: FILENAME_' + tickerinput + ".csv")
-    aye = datatest.index
-    st.dataframe(aye['Date'])
+    p1,p2,p3 = st.beta_columns([.5,3,.5])
+    with p1:
+        st.write("")
+    with p2:
+        st.dataframe(datatest, width=1000)
+        fname = st.text_input('Enter here: FILENAME_' + tickerinput + ".csv")
+    with p3:
+        st.write("")
+
+
 
     def download_link(object_to_download, download_filename, download_link_text):
 
