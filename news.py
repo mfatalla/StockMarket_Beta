@@ -32,7 +32,7 @@ def News(asset):
         st.session_state.page2 -= 1
         st.session_state.count2 -= 5
 
-    trend_today = st.beta_expander("Trending Today", expanded=True)
+    trend_today = st.beta_expander("Trend Today", expanded=True)
     with trend_today:
 
         col1,col2,col3, col4,col5, col6,col7 = st.beta_columns([0.5,3,0.5,3,0.5,3,0.5])
@@ -59,7 +59,7 @@ def News(asset):
                 trend_df.loc[trend_length] = trend_row_data
 
             trend_df.set_index('Symbol', inplace=False)
-
+            st.subheader("Trending")
             st.table(trend_df)
         with col3:
             st.write("")
@@ -82,7 +82,7 @@ def News(asset):
                 trend_row_data = [trend_td.text.strip() for trend_td in trend_data]
                 trend_length = len(trend_df)
                 trend_df.loc[trend_length] = trend_row_data
-
+            st.subheader("Top Gainers")
             st.table(trend_df)
         with col5:
             st.write("")
@@ -105,7 +105,7 @@ def News(asset):
                 trend_row_data = [trend_td.text.strip() for trend_td in trend_data]
                 trend_length = len(trend_df)
                 trend_df.loc[trend_length] = trend_row_data
-
+            st.subheader("Top Losers")
             st.table(trend_df)
         with col7:
             st.write("")
