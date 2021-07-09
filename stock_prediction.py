@@ -87,7 +87,7 @@ def stock_predict(tickerinput):
 
     ticker_input_2 = yf.Ticker(tickerinput)
     datatest = ticker_input_2.history(period=periodT, interval=intervalT)
-    st.dataframe(datatest)
+    st.dataframe(datatest, width=600)
     fname = st.text_input('Enter here: FILENAME_' + tickerinput + ".csv")
 
     def download_link(object_to_download, download_filename, download_link_text):
