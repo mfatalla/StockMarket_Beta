@@ -291,11 +291,13 @@ def stock_predict(tickerinput):
         st.write('MAPE: '+Fmape)
         mylist_1= ['A','B']
         mylist_2 = ['A', 'B']
+        mylist_3 = []
+        mylist_4 = []
         final_tab = pd.DataFrame(
-            {"": list(mylist_1), "Value": list(mylist_2)})
+            {"": list(mylist_4),"": list(mylist_1), "Value": list(mylist_2), "Value": list(mylist_3)})
         final_tab.index = [""] * len(final_tab)
         st.subheader("Summary")
         st.table(final_tab)
-        
+
         submit_button = st.form_submit_button(label='Submit')
 
