@@ -13,19 +13,10 @@ def Overview(asset):
     info = ticker.info
 
     def candle(asset):
-        candle_ex = st.beta_expander("Candlestick Chart Settings", expanded=True)
-        with candle_ex:
-            intervalList = ["1m", "5m", "15m", "30m"]
-            interval_candle = st.selectbox(
-                'Interval in minutes',
-                intervalList,
-            )
-            dayList = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15,
-                       16, 17, 18, 19, 20, 21, 22, 23, 24, 25]
-            chartdays = st.selectbox(
-                'No. of Days',
-                dayList,
-            )
+
+
+        interval_candle = '30m'
+        chartdays = '15'
         st.subheader('Market Profile Chart (US S&P 500)')
         stock = yf.Ticker(asset)
         history_data = stock.history(interval=interval_candle, period=str(chartdays) + "d")
