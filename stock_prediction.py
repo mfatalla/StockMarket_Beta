@@ -89,6 +89,10 @@ def stock_predict(tickerinput):
     ticker_input_2 = yf.Ticker(tickerinput)
     datatest = ticker_input_2.history(period=periodT, interval=intervalT)
 
+    with st.form(key='my_form'):
+        text_input = st.text_input(label='Enter some text')
+        submit_button = st.form_submit_button(label='Submit')
+        
     p1,p2,p3 = st.beta_columns([.5,3,.5])
     with p1:
         st.write("")
