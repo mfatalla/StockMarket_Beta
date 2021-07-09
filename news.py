@@ -34,26 +34,72 @@ def News(asset):
 
     trend_today = st.beta_expander("Trending Today", expanded=True)
     with trend_today:
-        trend_url = 'https://stockanalysis.com/news/all-stocks/'
-        trend_page = requests.get(trend_url)
-        trend_soup = BeautifulSoup(trend_page.text, 'lxml')
 
-        trend_table = trend_soup.find('table', {'class': 'sidetable'})
-        trend_header = []
+        col1, col2, col3, _ = st.beta_columns(3)
+        with col1:
+            trend_url = 'https://stockanalysis.com/news/all-stocks/'
+            trend_page = requests.get(trend_url)
+            trend_soup = BeautifulSoup(trend_page.text, 'lxml')
 
-        for c_r in trend_table.find_all('th'):
-            header = c_r.text.strip()
-            trend_header.append(header)
+            trend_table = trend_soup.find('table', {'class': 'sidetable'})
+            trend_header = []
 
-        trend_df = pd.DataFrame(columns=trend_header)
+            for c_r in trend_table.find_all('th'):
+                header = c_r.text.strip()
+                trend_header.append(header)
 
-        for trend_row in trend_table.find_all('tr')[1:]:
-            trend_data = trend_row.find_all('td')
-            trend_row_data = [trend_td.text.strip() for trend_td in trend_data]
-            trend_length = len(trend_df)
-            trend_df.loc[trend_length] = trend_row_data
+            trend_df = pd.DataFrame(columns=trend_header)
 
-        st.table(trend_df)
+            for trend_row in trend_table.find_all('tr')[1:]:
+                trend_data = trend_row.find_all('td')
+                trend_row_data = [trend_td.text.strip() for trend_td in trend_data]
+                trend_length = len(trend_df)
+                trend_df.loc[trend_length] = trend_row_data
+
+            st.table(trend_df)
+        with col2:
+            trend_url = 'https://stockanalysis.com/news/all-stocks/'
+            trend_page = requests.get(trend_url)
+            trend_soup = BeautifulSoup(trend_page.text, 'lxml')
+
+            trend_table = trend_soup.find('table', {'class': 'sidetable'})
+            trend_header = []
+
+            for c_r in trend_table.find_all('th'):
+                header = c_r.text.strip()
+                trend_header.append(header)
+
+            trend_df = pd.DataFrame(columns=trend_header)
+
+            for trend_row in trend_table.find_all('tr')[1:]:
+                trend_data = trend_row.find_all('td')
+                trend_row_data = [trend_td.text.strip() for trend_td in trend_data]
+                trend_length = len(trend_df)
+                trend_df.loc[trend_length] = trend_row_data
+
+            st.table(trend_df)
+        with col3:
+            trend_url = 'https://stockanalysis.com/news/all-stocks/'
+            trend_page = requests.get(trend_url)
+            trend_soup = BeautifulSoup(trend_page.text, 'lxml')
+
+            trend_table = trend_soup.find('table', {'class': 'sidetable'})
+            trend_header = []
+
+            for c_r in trend_table.find_all('th'):
+                header = c_r.text.strip()
+                trend_header.append(header)
+
+            trend_df = pd.DataFrame(columns=trend_header)
+
+            for trend_row in trend_table.find_all('tr')[1:]:
+                trend_data = trend_row.find_all('td')
+                trend_row_data = [trend_td.text.strip() for trend_td in trend_data]
+                trend_length = len(trend_df)
+                trend_df.loc[trend_length] = trend_row_data
+
+            st.table(trend_df)
+
     Cnews = st.beta_expander("Company News", expanded=True)
     with Cnews:
         endp = st.session_state.count
