@@ -56,7 +56,7 @@ def News(asset):
                 trend_length = len(trend_df)
                 trend_df.loc[trend_length] = trend_row_data
 
-            trend_df.set_index('Symbol')
+            trend_df.set_index('Symbol', inplace=False)
 
             st.table(trend_df)
         with col2:
