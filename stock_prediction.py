@@ -220,6 +220,15 @@ def stock_predict(tickerinput):
     Fmse = '{0:.2f}'.format(mse)
     st.write(Fmse)
 
+    Fmae = '{0:.2f}'.format(mae)
+    st.write(Fmae)
+
+    Frmse = '{0:.2f}'.format(rmse)
+    st.write(Frmse)
+
+    Fmape = '{0:.2f}'.format(mape)
+    st.write(Fmape)
+
 
 
     part1, part2 = st.beta_columns(2)
