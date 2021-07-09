@@ -216,6 +216,10 @@ def stock_predict(tickerinput):
     mape = np.mean(np.abs(fc - test_data) / np.abs(test_data))
     st.write('MAPE: ' + str(mape))
 
+    Fmse = "{:.2f}".format(mse) * 100
+    st.write(Fmse)
+
+
 
     part1, part2 = st.beta_columns(2)
     with part1:
@@ -241,6 +245,3 @@ def stock_predict(tickerinput):
         st.subheader("Figure 6")
         st.pyplot(fig_6)
 
-
-
-stock_predict(tickerinput)
