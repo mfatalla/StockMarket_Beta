@@ -12,12 +12,11 @@ import stock_prediction
 
 
 st.set_page_config(
-    page_title='SLAPSOIL',
-    page_icon='💜',
+    page_title='Stock Market Forecasting',
+    page_icon='💲',
     layout='wide',
     initial_sidebar_state="expanded",
 )
-
 
 @st.cache(suppress_st_warning=True)
 def load_data():
@@ -138,10 +137,6 @@ elif menubar == 'Company Profile':
 
 elif menubar == 'About':
     about.About()
-
-
-
-
 
 else:
     st.error("Something has gone terribly wrong.")
