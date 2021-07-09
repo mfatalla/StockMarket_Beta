@@ -270,7 +270,7 @@ def Scrappy(tickerinput):
         periodT, intervalsT = st.beta_columns(2)
         with periodT:
             history_args["period"] = st.selectbox(
-                "Select Period", options=Ticker.PERIODS, index=5  # pylint: disable=protected-access
+                "Select Period", options=Ticker.PERIODS, index=8  # pylint: disable=protected-access
             )
             fname = st.text_input('Enter here: FILENAME_' + tickerinput+ ".csv")
         with intervalsT:
@@ -309,15 +309,21 @@ def Scrappy(tickerinput):
         plt.plot(datatest['Close'])
         plt.title((tickerinput) + ' closing price')
 
-        st.subheader("Figure1")
-        st.pyplot(line_fig)
+
 
         df_close = datatest['Close']
         df_close.plot(style='k.')
         plt.title('Scatter plot of closing price')
-        st.subheader("Figure 2")
+
         scatter_fig = line_fig
-        st.pyplot(scatter_fig)
+
+        part1_1, part1_2 = st.beta_columns(2)
+        with part1_1:
+            st.subheader("Figure1")
+            st.pyplot(line_fig)
+        with part1_2:
+            st.subheader("Figure 2")
+            st.pyplot(scatter_fig)
 
         # Test for staionarity
         def test_stationarity(timeseries):
