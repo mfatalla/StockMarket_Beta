@@ -300,5 +300,5 @@ def stock_predict(tickerinput):
         st.subheader("Summary")
         st.table(final_tab)
 
-        submit_button = st.form_submit_button(label='Submit')
+        submitted = st.form_submit_button(label='Submit')
 
