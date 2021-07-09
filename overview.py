@@ -134,13 +134,13 @@ def Overview(asset):
         )
         fig_candle.update_layout(
             bargap=0.01,  # gap between bars of adjacent location coordinates,
-            showlegend=True,
+            showlegend=False,
 
             xaxis=dict(
-                showticklabels=True
+                showticklabels=False
             ),
             yaxis=dict(
-                showticklabels=True
+                showticklabels=False
             ),
 
             yaxis2=dict(
@@ -148,7 +148,7 @@ def Overview(asset):
                 side="right"
             )
         )
-        fig_candle.update_yaxes(nticks=10)
+        fig_candle.update_yaxes(nticks=20)
         fig_candle.update_yaxes(side="right")
         fig_candle.update_layout(height=800)
 
