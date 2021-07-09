@@ -16,6 +16,7 @@ from pmdarima.arima import auto_arima
 from sklearn.metrics import mean_squared_error, mean_absolute_error
 import math
 import numpy as np
+import base64
 
 
 def Scrappy(tickerinput):
@@ -266,17 +267,39 @@ def Scrappy(tickerinput):
             "end": None,
         }
 
-        history_args["period"] = st.selectbox(
-            "Select Period", options=Ticker.PERIODS, index=5  # pylint: disable=protected-access
-        )
-        history_args["interval"] = st.selectbox(
-            "Select Interval", options=Ticker.INTERVALS, index=8  # pylint: disable=protected-access
-        )
+        periodT, intervalsT = st.beta_columns(2)
+        with periodT:
+            history_args["period"] = st.selectbox(
+                "Select Period", options=Ticker.PERIODS, index=5  # pylint: disable=protected-access
+            )
+            fname = st.text_input('Enter here: FILENAME_' + tickerinput+ ".csv")
+        with intervalsT:
+
+            history_args["interval"] = st.selectbox(
+                "Select Interval", options=Ticker.INTERVALS, index=8  # pylint: disable=protected-access
+            )
         intervalT = history_args["interval"]
         periodT = history_args["period"]
 
         ticker_input_2 = yf.Ticker(tickerinput)
         datatest = ticker_input_2.history(period=periodT, interval=intervalT)
+
+        def download_link(object_to_download, download_filename, download_link_text):
+
+            if isinstance(object_to_download, pd.DataFrame):
+                object_to_download = object_to_download.to_csv(index=False)
+
+            # some strings <-> bytes conversions necessary here
+            b64 = base64.b64encode(object_to_download.encode()).decode()
+
+            return f'<a href="data:file/txt;base64,{b64}" download="{download_filename}">{download_link_text}</a>'
+
+        if st.button('Download Dataframe as CSV'):
+            tmp_download_link = download_link(datatest, fname + '_' + tickerinput + '.csv',
+                                              'Click here to download your data!')
+            st.markdown(tmp_download_link, unsafe_allow_html=True)
+
+
 
         line_fig = plt.figure(figsize=(10, 6))
         plt.grid(True)
