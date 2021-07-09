@@ -296,8 +296,8 @@ def stock_predict(tickerinput):
         mylist_4 = ['7','8']
 
         final_tab = pd.DataFrame(
-            {" ": list(mylist_4)," ": list(mylist_1), " ": list(mylist_2), " ": list(mylist_3)})
-        final_tab.index = [" "] * len(final_tab)
+            {"Value1": list(mylist_1),"Value2": list(mylist_2), "Value3": list(mylist_3), "Value4": list(mylist_4)})
+        final_tab.index = [""] * len(final_tab)
         st.subheader("Summary")
         st.table(final_tab)
 
