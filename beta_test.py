@@ -55,7 +55,7 @@ sidebar_components = st.sidebar.beta_container()
 with sidebar_components:
 
     st.image('data//logo1.png')
-    st.subheader("Select asset")
+    st.write("")
     asset = st.sidebar.selectbox(
         "Click below to select a new asset",
         components.index.sort_values(),
