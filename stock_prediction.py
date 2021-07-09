@@ -254,7 +254,7 @@ def stock_predict(tickerinput):
         plt.plot(fc_series, color='orange', label='Predicted Stock Price')
         plt.fill_between(lower_series.index, lower_series, upper_series,
                          color='k', alpha=.10)
-        plt.title('Altaba Inc. Stock Price Prediction')
+        plt.title((info['longName'])+'Stock Price Prediction')
         plt.xlabel('Time')
         plt.ylabel('Actual Stock Price')
         plt.legend(loc='upper left', fontsize=8)
@@ -289,5 +289,13 @@ def stock_predict(tickerinput):
 
         Fmape = '{0:.3f}'.format(mape)
         st.write('MAPE: '+Fmape)
+        mylist_1= ['A','B']
+        mylist_2 = ['A', 'B']
+        final_tab = pd.DataFrame(
+            {"": list(mylist_1), "Value": list(mylist_2)})
+        final_tab.index = [""] * len(final_tab)
+        st.subheader("Summary")
+        st.table(final_tab)
+        
         submit_button = st.form_submit_button(label='Submit')
 
