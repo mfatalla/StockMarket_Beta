@@ -287,7 +287,7 @@ def Scrappy(tickerinput):
         plt.title((tickerinput) + ' closing price')
 
         st.subheader("Figure1")
-        st.pyplot(line_fig)
+        st.pyplot(line_fig, height= 300)
 
         df_close = datatest['Close']
         df_close.plot(style='k.')
