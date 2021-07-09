@@ -16,6 +16,7 @@ import pandas as pd
 import base64
 from yahooquery import Ticker
 
+tickerinput = 'NFLX'
 
 def stock_predict(tickerinput):
 
@@ -28,17 +29,62 @@ def stock_predict(tickerinput):
 
     periodT, intervalsT = st.beta_columns(2)
     with periodT:
+
+        v_T = ['6mo', '1y', '2y', '5y']
         history_args["period"] = st.selectbox(
-            "Select Period", options=Ticker.PERIODS, index=8  # pylint: disable=protected-access
+            "Select Period", options=v_T, index=8  # pylint: disable=protected-access
         )
+
+        periodT_2 = history_args["period"]
+        if periodT_2 == '6mo':
+            v_I = ['1h', '1d']
+
+        if periodT_2 == '1y':
+            v_I = ['1h', '1d', '1wk']
+
+        if periodT_2 == '2y':
+            v_I = ['1h', '1d', '1wk', '1mo']
+
+        if periodT_2 == '5y':
+            v_I = ['1d', '1wk', '1mo', '3mo']
+
+
         fname = st.text_input('Enter here: FILENAME_' + tickerinput+ ".csv")
     with intervalsT:
 
         history_args["interval"] = st.selectbox(
-            "Select Interval", options=Ticker.INTERVALS, index=8  # pylint: disable=protected-access
+            "Select Interval", options=v_I, index=8  # pylint: disable=protected-access
         )
     intervalT = history_args["interval"]
     periodT = history_args["period"]
+
+    if periodT == '6mo' and intervalT =='1h':
+        implies_value = 87
+    if periodT == '6mo' and intervalT =='1d':
+        implies_value = 13
+    if periodT == '1y' and intervalT =='1h':
+        implies_value = 176
+    if periodT == '1y' and intervalT =='1d':
+        implies_value = 26
+    if periodT == '1y' and intervalT =='1wk':
+        implies_value = 6
+    if periodT == '2y' and intervalT =='1h':
+        implies_value = 353
+    if periodT == '2y' and intervalT =='1d':
+        implies_value = 51
+    if periodT == '2y' and intervalT =='1wk':
+        implies_value = 11
+    if periodT == '2y' and intervalT =='1mo':
+        implies_value = 3
+    if periodT == '5y' and intervalT =='1d':
+        implies_value = 126
+    if periodT == '5y' and intervalT =='1wk':
+        implies_value = 27
+    if periodT == '5y' and intervalT =='1mo':
+        implies_value = 7
+    if periodT == '5y' and intervalT =='3mo':
+        implies_value = 3
+
 
     ticker_input_2 = yf.Ticker(tickerinput)
     datatest = ticker_input_2.history(period=periodT, interval=intervalT)
@@ -58,6 +104,9 @@ def stock_predict(tickerinput):
         tmp_download_link = download_link(datatest, fname + '_' + tickerinput + '.csv',
                                           'Click here to download your data!')
         st.markdown(tmp_download_link, unsafe_allow_html=True)
+
+    if periodT == '2y' and intervalT == '1d':
+        st.write("WAP")
 
 
 
@@ -95,7 +144,7 @@ def stock_predict(tickerinput):
         for key, values in adft[4].items():
             output['critical value (%s)' % key] = values
 
-    result = seasonal_decompose(df_close, model='multiplicative', freq=30)
+    result = seasonal_decompose(df_close, model='multiplicative', freq=1)
     summary_fig = plt.figure()
     summary_fig = result.plot()
     summary_fig.set_size_inches(16, 9)
@@ -142,7 +191,7 @@ def stock_predict(tickerinput):
     fitted = model.fit(disp=-1)
 
     # Forecast
-    fc, se, conf = fitted.forecast(51, alpha=0.05)  # 95% confidence
+    fc, se, conf = fitted.forecast(implies_value, alpha=0.05)  # 95% confidence
     fc_series = pd.Series(fc, index=test_data.index)
     lower_series = pd.Series(conf[:, 0], index=test_data.index)
     upper_series = pd.Series(conf[:, 1], index=test_data.index)
@@ -168,10 +217,6 @@ def stock_predict(tickerinput):
     mape = np.mean(np.abs(fc - test_data) / np.abs(test_data))
     st.write('MAPE: ' + str(mape))
 
-    if periodT == '2d' and intervalT =='1d':
-        st.write("WAP")
-
-
 
     part1, part2 = st.beta_columns(2)
     with part1:
@@ -196,3 +241,7 @@ def stock_predict(tickerinput):
     with part6:
         st.subheader("Figure 6")
         st.pyplot(fig_6)
+
+
+
+stock_predict(tickerinput)
