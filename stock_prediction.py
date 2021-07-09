@@ -302,4 +302,6 @@ def stock_predict(tickerinput):
         st.table(final_tab)
 
         submitted = st.form_submit_button(label='Submit')
+        if submitted:
+            st.write("WAP")
 
