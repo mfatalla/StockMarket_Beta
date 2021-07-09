@@ -290,16 +290,17 @@ def stock_predict(tickerinput):
         Fmape = '{0:.3f}'.format(mape)
         st.write('MAPE: '+Fmape)
 
-        mylist_1 = ['Mean Square Error','Mean Absolute Error','Root Mean Square Error','Mean Absoulute Percentage Error']
-        mylist_2 = [' ',' ']
-        mylist_3 = [mse,mae,rmse,mape]
-        mylist_4 = [' ',' ']
+        first_col_1 = ['streamlit', 'pandas', 'request', 'bs4', 'beautifulsoup4', 'lmxl', 'yfinance', 'plotly', 'numpy',
+                     'matploblib', 'yahooquery', 'plotly', 'statsmodel', 'pmdarima', 'scikit-learn']
+        second_col_1 = ['0.84.0', '1.2.4', '2.25.1', '0.0.1', '4.9.3', '4.6.3', '0.1.59', '4.14.3', '1.20.2', '3.4.2',
+                      '2.2.15', '4.14.3', '0.12.2', '1.8.2', '0.24.2']
+        requirements = pd.DataFrame(
+            {"Dependencies": list(first_col_1), "Version": list(second_col_1)})
+        requirements.index = [""] * len(requirements)
+        st.subheader("Requirements")
+        st.table(requirements)
 
-        final_tab = pd.DataFrame(
-            {"Value1": list(mylist_1),"Value2": list(mylist_2), "Value3": list(mylist_3),"Value4": list(mylist_4)})
-        final_tab.index = [""] * len(final_tab)
-        st.subheader("Accuracy Metrics")
-        st.table(final_tab)
-
-
+        submitted = st.form_submit_button(label='Hey')
+    if submitted:
+        st.write("WAP")
 
