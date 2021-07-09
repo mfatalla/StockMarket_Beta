@@ -302,23 +302,25 @@ def Scrappy(tickerinput):
 
 
 
-        line_fig = plt.figure(figsize=(10, 6))
-        plt.grid(True)
-        plt.xlabel('Dates')
-        plt.ylabel('Close Prices')
-        plt.plot(datatest['Close'])
-        plt.title((tickerinput) + ' closing price')
-        plt.pyplot(line_fig)
-        df_close = datatest['Close']
-        df_close.plot(style='k.')
-        plt.title('Scatter plot of closing price')
-        scatter_fig = line_fig
-        
+
+
+
+
         part1_1, part1_2 = st.beta_columns(2)
         with part1_1:
+            line_fig = plt.figure(figsize=(10, 6))
+            plt.grid(True)
+            plt.xlabel('Dates')
+            plt.ylabel('Close Prices')
+            plt.plot(datatest['Close'])
+            plt.title((tickerinput) + ' closing price')
             st.subheader("Figure1")
             st.pyplot(line_fig)
         with part1_2:
+            df_close = datatest['Close']
+            df_close.plot(style='k.')
+            plt.title('Scatter plot of closing price')
+            scatter_fig = line_fig
             st.subheader("Figure 2")
             st.pyplot(scatter_fig)
 
