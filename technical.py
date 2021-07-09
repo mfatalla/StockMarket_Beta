@@ -9,7 +9,6 @@ warnings.filterwarnings('ignore')
 import pandas as pd
 import matplotlib.pyplot as plt
 from pylab import rcParams
-rcParams['figure.figsize'] = 4, 2
 from statsmodels.tsa.stattools import adfuller
 from statsmodels.tsa.seasonal import seasonal_decompose
 from statsmodels.tsa.arima_model import ARIMA
@@ -287,7 +286,8 @@ def Scrappy(tickerinput):
         plt.title((tickerinput) + ' closing price')
 
         st.subheader("Figure1")
-        st.pyplot(line_fig,height = 50)
+        st.pyplot(line_fig)
+        st.line_chart(line_fig)
 
         df_close = datatest['Close']
         df_close.plot(style='k.')
