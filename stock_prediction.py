@@ -137,7 +137,6 @@ def stock_predict(tickerinput):
 
     fig_5 = model_autoARIMA.plot_diagnostics(figsize=(15, 8))
 
-    st.write(fig_5)
 
     model = ARIMA(train_data, order=(3, 1, 2))
     fitted = model.fit(disp=-1)
@@ -169,8 +168,11 @@ def stock_predict(tickerinput):
     mape = np.mean(np.abs(fc - test_data) / np.abs(test_data))
     st.write('MAPE: ' + str(mape))
 
+    if periodT == '2d' and intervalT =='1d':
+        st.write("WAP")
 
-    
+
+
     part1, part2 = st.beta_columns(2)
     with part1:
         st.subheader("Figure1")
