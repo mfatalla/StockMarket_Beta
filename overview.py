@@ -1,6 +1,5 @@
 import requests
 import lxml.html as lh
-from bs4 import BeautifulSoup
 from plotly.subplots import make_subplots
 import plotly.graph_objects as go
 import streamlit as st
@@ -14,7 +13,6 @@ def Overview(asset):
     info = ticker.info
 
     def candle(asset):
-        st.subheader('Market Profile Chart (US S&P 500)')
 
         candle_ex = st.beta_expander("Candlestick Chart Settings", expanded=True)
         with candle_ex:
@@ -29,7 +27,7 @@ def Overview(asset):
                 'No. of Days',
                 dayList,
             )
-
+        st.subheader('Market Profile Chart (US S&P 500)')
         stock = yf.Ticker(asset)
         history_data = stock.history(interval=interval_candle, period=str(chartdays) + "d")
         prices = history_data['Close']
@@ -163,7 +161,6 @@ def Overview(asset):
 
     left, right = st.beta_columns([1, 1])
     with left:
-        st.write("")
         summarytable = st.beta_container()
         with summarytable:
             urlfortable = 'https://stockanalysis.com/stocks/' + asset
@@ -202,7 +199,6 @@ def Overview(asset):
             st.table(final_table)
 
     with right:
-        st.write("")
         st.subheader("About")
         st.info(info['longBusinessSummary'])
 
