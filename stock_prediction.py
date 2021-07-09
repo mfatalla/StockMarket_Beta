@@ -15,13 +15,12 @@ import numpy as np
 import pandas as pd
 import base64
 
-tickerinput = 'NFLX'
 
 def stock_predict(tickerinput):
 
     asset_2 = yf.Ticker(tickerinput)
     info = asset_2.info
-
+    st.title((info['longName']) + 'Stock Price Prediction')
     history_args = {
         "period": "1y",
         "interval": "1d",
@@ -285,7 +284,7 @@ def stock_predict(tickerinput):
         v2 = 100.0 - float(Fmae)
         v3 = 100.0 - float(Frmse)
         v4 = 100.0 - float(Fmape)
-        first_col_1 = ['Mean Square Error', 'Mean Absolute Error', 'Root Mean Square Error', 'Mean Absolute Percetage Error']
+        first_col_1 = ['Mean Square Error', 'Mean Absolute Error', 'Root Mean Square Error', 'Mean Absolute Percentage Error']
         second_col_1 = [str(v1)+' %',str(v2)+' %',str(v3)+' %',str(v4)+' %']
         third_col_1 = [Fmse+' %',Fmae+' %',Frmse+' %',Fmape+' %']
         requirements = pd.DataFrame(
