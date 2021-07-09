@@ -55,9 +55,9 @@ sidebar_components = st.sidebar.beta_container()
 with sidebar_components:
 
     st.image('data//logo1.png')
-    st.write("")
+    st.subheader("Select asset")
     asset = st.sidebar.selectbox(
-        "Click below to select new asset",
+        "Click below to select a new asset",
         components.index.sort_values(),
         index=3,
         format_func=label,
@@ -74,26 +74,15 @@ with sidebar_components:
     change = soup.find('span', {'id': 'spd'}).text
     rate = soup.find('span', {'id': 'spd'}).find_next('span').text
     meta = soup.find('div', {'id': 'sti'}).find('span').text
-    try:
-        after = soup.find('div', {'id': 'ext'}).find_next('span').text
-        after2 = soup.find('span', {'id': 'extc'}).text
-        aftert = soup.find('span', {'id': 'extcp'}).text
-        aftertime = soup.find('span', {'id': 'exttime'}).text
-        CR = change + " (" + rate + ")"
-        CT = after2 + " (" + aftert + ")"
-        sub = change
-        sub2 = after2
-        aye = ": After-hours"
-    except AttributeError as attriErr:
-        after = "NO DATA"
-        after2 = "NO DATA"
-        aftert = "NO DATA"
-        aftertime = "NO DATA"
-        CR = "NO DATA"
-        CT = "NO DATA"
-        sub = "NO DATA"
-        sub2 = "NO DATA"
-        aye = "NO DATA"
+    after = soup.find('div', {'id': 'ext'}).find_next('span').text
+    after2 = soup.find('span', {'id': 'extc'}).text
+    aftert = soup.find('span', {'id': 'extcp'}).text
+    aftertime = soup.find('span', {'id': 'exttime'}).text
+    CR = change + " (" + rate + ")"
+    CT = after2 + " (" + aftert + ")"
+    sub = change
+    sub2 = after2
+    aye = ": After-hours"
 
     formtab = st.sidebar.beta_container()
     with formtab:
@@ -106,37 +95,32 @@ with sidebar_components:
         st.markdown(
             f"<p style='vertical-align:bottom;font-weight: bold; color: #FFFFFF;font-size: 20px;'>{xx}</p>",
             unsafe_allow_html=True)
-        if sub != "NO DATA" and sub2 != "NO DATA":
-            if float(sub) > 0:
-                aye2 = "+"
-                st.markdown(
-                    f"<p style='vertical-align:bottom;font-weight: bold; color: #00AC4A;font-size: 13px;'>{aye2 + CR}</p>",
-                    unsafe_allow_html=True)
-            else:
-                st.markdown(
-                    f"<p style='vertical-align:bottom;font-weight: bold; color: #D10000;font-size: 13px;'>{CR}</p>",
-                    unsafe_allow_html=True)
+        if float(sub) > 0:
+            aye2 = "+"
             st.markdown(
-                f"<p style='vertical-align:bottom;font-weight: italic; color: #FFFFFF;font-size: 10px;'>{meta}</p>",
-                unsafe_allow_html=True)
-            if float(sub2) > 0:
-                st.markdown(after + " " + currency)
-                st.markdown(
-                    f"<p style='vertical-align:bottom;font-weight: bold; color: #00AC4A;font-size: 13px;'>{CT + aye}</p>",
-                    unsafe_allow_html=True)
-            else:
-                st.markdown(after + " " + currency)
-                st.markdown(
-                    f"<p style='vertical-align:bottom;font-weight: bold; color: #D10000;;font-size: 13px;'>{CT + aye}</p>",
-                    unsafe_allow_html=True)
-            st.markdown(
-                f"<p style='vertical-align:bottom;font-weight: italic; color: #FFFFFF;font-size: 10px;'>{aftertime}</p>",
+                f"<p style='vertical-align:bottom;font-weight: bold; color: #00AC4A;font-size: 13px;'>{aye2 + CR}</p>",
                 unsafe_allow_html=True)
         else:
-            nodata = "NO PRE-MARKET DATA AVAILABLE"
             st.markdown(
-                f"<p style='vertical-align:bottom;font-weight: bold; color: #FFFFFF;font-size: 20px;'>{nodata}</p>",
+                f"<p style='vertical-align:bottom;font-weight: bold; color: #D10000;font-size: 13px;'>{CR}</p>",
                 unsafe_allow_html=True)
+        st.markdown(
+            f"<p style='vertical-align:bottom;font-weight: italic; color: #FFFFFF;font-size: 10px;'>{meta}</p>",
+            unsafe_allow_html=True)
+        if float(sub2) > 0:
+            st.markdown(after + " " + currency)
+            st.markdown(
+                f"<p style='vertical-align:bottom;font-weight: bold; color: #00AC4A;font-size: 13px;'>{CT + aye}</p>",
+                unsafe_allow_html=True)
+        else:
+            st.markdown(after + " " + currency)
+            st.markdown(
+                f"<p style='vertical-align:bottom;font-weight: bold; color: #D10000;;font-size: 13px;'>{CT + aye}</p>",
+                unsafe_allow_html=True)
+        st.markdown(
+            f"<p style='vertical-align:bottom;font-weight: italic; color: #FFFFFF;font-size: 10px;'>{aftertime}</p>",
+            unsafe_allow_html=True)
+
 
 if menubar == 'Overview':
 
