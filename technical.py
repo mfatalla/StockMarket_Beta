@@ -283,7 +283,6 @@ def Scrappy(tickerinput):
 
         ticker_input_2 = yf.Ticker(tickerinput)
         datatest = ticker_input_2.history(period=periodT, interval=intervalT)
-        st.table(datatest)
         st.dataframe(datatest)
 
         def download_link(object_to_download, download_filename, download_link_text):
@@ -392,7 +391,7 @@ def Scrappy(tickerinput):
         fitted = model.fit(disp=-1)
 
         # Forecast
-        fc, se, conf = fitted.forecast(1, alpha=0.05)  # 95% confidence
+        fc, se, conf = fitted.forecast(51, alpha=0.05)  # 95% confidence
         fc_series = pd.Series(fc, index=test_data.index)
         lower_series = pd.Series(conf[:, 0], index=test_data.index)
         upper_series = pd.Series(conf[:, 1], index=test_data.index)
