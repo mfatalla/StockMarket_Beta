@@ -208,18 +208,24 @@ def stock_predict(tickerinput):
 
     # report performance
     mse = mean_squared_error(test_data, fc)
-    st.write('MSE: ' + str(mse))
+
     mae = mean_absolute_error(test_data, fc)
-    st.write('MAE: ' + str(mae))
+
     rmse = math.sqrt(mean_squared_error(test_data, fc))
-    st.write('RMSE: ' + str(rmse))
+
     mape = np.mean(np.abs(fc - test_data) / np.abs(test_data))
-    st.write('MAPE: ' + str(mape))
 
 
+    Fmse = '{0:.3f}'.format(mse)
+    st.write('MSE: '+Fmse)
 
+    Fmae = '{0:.3f}'.format(mae)
+    st.write('MAE: '+Fmae)
 
-    Fmape = '{0:.2f}'.format(mape)
+    Frmse = '{0:.3f}'.format(rmse)
+    st.write('RMSE: '+Frmse)
+
+    Fmape = '{0:.3f}'.format(mape)
     st.write('MAPE: '+Fmape)
 
 
