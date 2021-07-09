@@ -89,9 +89,7 @@ def stock_predict(tickerinput):
     ticker_input_2 = yf.Ticker(tickerinput)
     datatest = ticker_input_2.history(period=periodT, interval=intervalT)
 
-    with st.form(key='my_form'):
-        st.write("WAP")
-        submit_button = st.form_submit_button(label='Submit')
+
 
     p1,p2,p3 = st.beta_columns([.5,3,.5])
     with p1:
@@ -125,14 +123,18 @@ def stock_predict(tickerinput):
     plt.plot(datatest['Close'])
     plt.title((info['longName']) + ' closing price')
 
-    P1_1, P1_2, P1_3 = st.beta_columns([1,3,1])
-    with P1_1:
-        st.write("")
-    with P1_2:
-        st.subheader("Closing Price")
-        st.pyplot(line_fig)
-    with P1_3:
-        st.write("")
+    with st.form(key='figure1'):
+        P1_1, P1_2, P1_3 = st.beta_columns([1, 3, 1])
+        with P1_1:
+            st.write("")
+        with P1_2:
+            st.subheader("Closing Price")
+            st.pyplot(line_fig)
+        with P1_3:
+            st.write("")
+        submit_button = st.form_submit_button(label='Submit')
+
+
 
     df_close = datatest['Close']
     df_close.plot(style='k.')
