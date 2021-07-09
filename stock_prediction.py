@@ -50,8 +50,6 @@ def stock_predict(tickerinput):
         if periodT_2 == '5y':
             v_I = ['1d', '1wk', '1mo', '3mo']
 
-
-        fname = st.text_input('Enter here: FILENAME_' + tickerinput+ ".csv")
     with intervalsT:
 
         history_args["interval"] = st.selectbox(
@@ -87,10 +85,10 @@ def stock_predict(tickerinput):
     if periodT == '5y' and intervalT =='3mo':
         implies_value = 3
 
-
     ticker_input_2 = yf.Ticker(tickerinput)
     datatest = ticker_input_2.history(period=periodT, interval=intervalT)
     st.dataframe(datatest)
+    fname = st.text_input('Enter here: FILENAME_' + tickerinput + ".csv")
 
     def download_link(object_to_download, download_filename, download_link_text):
 
@@ -107,7 +105,6 @@ def stock_predict(tickerinput):
                                           'Click here to download your data!')
         st.markdown(tmp_download_link, unsafe_allow_html=True)
 
-
     line_fig = plt.figure(figsize=(10, 6))
     plt.grid(True)
     plt.xlabel('Dates')
@@ -123,8 +120,6 @@ def stock_predict(tickerinput):
         st.pyplot(line_fig)
     with P1_3:
         st.write("")
-
-
 
     df_close = datatest['Close']
     df_close.plot(style='k.')
