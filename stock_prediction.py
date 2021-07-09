@@ -20,7 +20,7 @@ def stock_predict(tickerinput):
 
     asset_2 = yf.Ticker(tickerinput)
     info = asset_2.info
-    st.subheader((info['longName']) + ' Stocks Forecast')
+    st.title(' Stocks Forecast')
     history_args = {
         "period": "1y",
         "interval": "1d",
