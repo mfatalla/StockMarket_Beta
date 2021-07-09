@@ -151,7 +151,7 @@ def Overview(asset):
         fig_candle.update_yaxes(nticks=5)
         fig_candle.update_yaxes(side="right")
         fig_candle.update_layout(height=800)
-        fig_candle.update_layout(gridcolor='LightBlue')
+        fig_candle.update_layout(gridcolor='LightPink')
 
         config = {
             'modeBarButtonsToAdd': ['drawline']
