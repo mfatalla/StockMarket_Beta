@@ -216,8 +216,9 @@ def stock_predict(tickerinput):
     mape = np.mean(np.abs(fc - test_data) / np.abs(test_data))
     st.write('MAPE: ' + str(mape))
 
-    Fmse = "{:.2f}".format(mse)
-    st.write(Fmse)
+
+    answer = str(round(mse, 2))
+    st.write(answer)
 
 
 
