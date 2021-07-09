@@ -1,7 +1,6 @@
 import streamlit as st
 import warnings
 warnings.filterwarnings('ignore')
-import pandas as pd
 import matplotlib.pyplot as plt
 from pylab import rcParams
 from statsmodels.tsa.stattools import adfuller
@@ -11,128 +10,168 @@ from pmdarima.arima import auto_arima
 from sklearn.metrics import mean_squared_error, mean_absolute_error
 import math
 import numpy as np
+import pandas as pd
+import base64
+from yahooquery import Ticker
+import datetime as dt
+import yfinance as yf
 
 def stock_predict(tickerinput):
-    part1_1, part1_2 = st.beta_columns(2)
-        with part1_1:
-            line_fig = plt.figure(figsize=(10, 6))
-            plt.grid(True)
-            plt.xlabel('Dates')
-            plt.ylabel('Close Prices')
-            plt.plot(datatest['Close'])
-            plt.title((tickerinput) + ' closing price')
-            st.subheader("Figure1")
-            st.pyplot(line_fig)
-        with part1_2:
-            df_close = datatest['Close']
-            df_close.plot(style='k.')
-            plt.title('Scatter plot of closing price')
-            scatter_fig = line_fig
-            st.subheader("Figure 2")
-            st.pyplot(scatter_fig)
 
-        part1_3, part1_4 = st.beta_columns(2)
-        with part1_3:
-            # Test for staionarity
-            def test_stationarity(timeseries):
-                # Determing rolling statistics
-                rolmean = timeseries.rolling(12).mean()
-                rolstd = timeseries.rolling(12).std()
-                # Plot rolling statistics:
-                plt.plot(timeseries, color='blue', label='Original')
-                plt.plot(rolmean, color='red', label='Rolling Mean')
-                plt.plot(rolstd, color='black', label='Rolling Std')
-                plt.legend(loc='best')
-                plt.title('Rolling Mean and Standard Deviation')
-                plt.show(block=False)
+    history_args = {
+        "period": "1y",
+        "interval": "1d",
+        "start": dt.datetime.now() - dt.timedelta(days=365),
+        "end": None,
+    }
 
-                adft = adfuller(timeseries, autolag='AIC')
-                # output for dft will give us without defining what the values are.
-                # hence we manually write what values does it explains using a for loop
-                output = pd.Series(adft[0:4],
-                                   index=['Test Statistics', 'p-value', 'No. of lags used',
-                                          'Number of observations used'])
-                for key, values in adft[4].items():
-                    output['critical value (%s)' % key] = values
+    periodT, intervalsT = st.beta_columns(2)
+    with periodT:
+        history_args["period"] = st.selectbox(
+            "Select Period", options=Ticker.PERIODS, index=8  # pylint: disable=protected-access
+        )
+        fname = st.text_input('Enter here: FILENAME_' + tickerinput+ ".csv")
+    with intervalsT:
 
-            result = seasonal_decompose(df_close, model='multiplicative', freq=30)
-            summary_fig = plt.figure()
-            summary_fig = result.plot()
-            summary_fig.set_size_inches(16, 9)
+        history_args["interval"] = st.selectbox(
+            "Select Interval", options=Ticker.INTERVALS, index=8  # pylint: disable=protected-access
+        )
+    intervalT = history_args["interval"]
+    periodT = history_args["period"]
 
-            rcParams['figure.figsize'] = 10, 6
-            df_log = np.log(df_close)
-            moving_avg = df_log.rolling(12).mean()
-            std_dev = df_log.rolling(12).std()
-            plt.legend(loc='best')
-            plt.title('Moving Average')
-            plt.plot(std_dev, color="black", label="Standard Deviation")
-            plt.plot(moving_avg, color="red", label="Mean")
-            plt.legend()
-            st.subheader("Figure 3")
-            st.pyplot(summary_fig)
-        with part1_4:
-            # split data into train and training set
-            train_data, test_data = df_log[3:int(len(df_log) * 0.9)], df_log[int(len(df_log) * 0.9):]
-            predict_fig = plt.figure(figsize=(10, 6))
-            plt.grid(True)
-            plt.xlabel('Dates')
-            plt.ylabel('Closing Prices')
-            plt.plot(df_log, 'green', label='Train data')
-            plt.plot(test_data, 'blue', label='Test data')
-            plt.legend()
-            st.subheader("Figure 4")
-            st.pyplot(predict_fig)
+    ticker_input_2 = yf.Ticker(tickerinput)
+    datatest = ticker_input_2.history(period=periodT, interval=intervalT)
+    st.dataframe(datatest)
 
-        part1_5, part1_6 = st.beta_columns(2)
-        with part1_5:
-            model_autoARIMA = auto_arima(train_data, start_p=0, start_q=0,
-                                         test='adf',  # use adftest to find             optimal 'd'
-                                         max_p=3, max_q=3,  # maximum p and q
-                                         m=1,  # frequency of series
-                                         d=None,  # let model determine 'd'
-                                         seasonal=False,  # No Seasonality
-                                         start_P=0,
-                                         D=0,
-                                         trace=True,
-                                         error_action='ignore',
-                                         suppress_warnings=True,
-                                         stepwise=True)
+    def download_link(object_to_download, download_filename, download_link_text):
 
-            fig_5 = model_autoARIMA.plot_diagnostics(figsize=(15, 8))
+        if isinstance(object_to_download, pd.DataFrame):
+            object_to_download = object_to_download.to_csv(index=False)
 
-            st.write(fig_5)
-        with part1_6:
-            model = ARIMA(train_data, order=(3, 1, 2))
-            fitted = model.fit(disp=-1)
+        # some strings <-> bytes conversions necessary here
+        b64 = base64.b64encode(object_to_download.encode()).decode()
 
-            # Forecast
-            fc, se, conf = fitted.forecast(51, alpha=0.05)  # 95% confidence
-            fc_series = pd.Series(fc, index=test_data.index)
-            lower_series = pd.Series(conf[:, 0], index=test_data.index)
-            upper_series = pd.Series(conf[:, 1], index=test_data.index)
-            wap = plt.figure(figsize=(12, 5), dpi=100)
-            plt.plot(train_data, label='training')
-            plt.plot(test_data, color='blue', label='Actual Stock Price')
-            plt.plot(fc_series, color='orange', label='Predicted Stock Price')
-            plt.fill_between(lower_series.index, lower_series, upper_series,
-                             color='k', alpha=.10)
-            plt.title('Altaba Inc. Stock Price Prediction')
-            plt.xlabel('Time')
-            plt.ylabel('Actual Stock Price')
-            plt.legend(loc='upper left', fontsize=8)
-            st.pyplot(wap)
+        return f'<a href="data:file/txt;base64,{b64}" download="{download_filename}">{download_link_text}</a>'
+
+    if st.button('Download Dataframe as CSV'):
+        tmp_download_link = download_link(datatest, fname + '_' + tickerinput + '.csv',
+                                          'Click here to download your data!')
+        st.markdown(tmp_download_link, unsafe_allow_html=True)
 
 
+    line_fig = plt.figure(figsize=(10, 6))
+    plt.grid(True)
+    plt.xlabel('Dates')
+    plt.ylabel('Close Prices')
+    plt.plot(datatest['Close'])
+    plt.title((tickerinput) + ' closing price')
+    st.subheader("Figure1")
+    st.pyplot(line_fig)
+
+    df_close = datatest['Close']
+    df_close.plot(style='k.')
+    plt.title('Scatter plot of closing price')
+    scatter_fig = line_fig
+    st.subheader("Figure 2")
+    st.pyplot(scatter_fig)
+
+    # Test for staionarity
+    def test_stationarity(timeseries):
+        # Determing rolling statistics
+        rolmean = timeseries.rolling(12).mean()
+        rolstd = timeseries.rolling(12).std()
+        # Plot rolling statistics:
+        plt.plot(timeseries, color='blue', label='Original')
+        plt.plot(rolmean, color='red', label='Rolling Mean')
+        plt.plot(rolstd, color='black', label='Rolling Std')
+        plt.legend(loc='best')
+        plt.title('Rolling Mean and Standard Deviation')
+        plt.show(block=False)
+
+        adft = adfuller(timeseries, autolag='AIC')
+        # output for dft will give us without defining what the values are.
+        # hence we manually write what values does it explains using a for loop
+        output = pd.Series(adft[0:4],
+                           index=['Test Statistics', 'p-value', 'No. of lags used',
+                                  'Number of observations used'])
+        for key, values in adft[4].items():
+            output['critical value (%s)' % key] = values
+
+    result = seasonal_decompose(df_close, model='multiplicative', freq=30)
+    summary_fig = plt.figure()
+    summary_fig = result.plot()
+    summary_fig.set_size_inches(16, 9)
+
+    rcParams['figure.figsize'] = 10, 6
+    df_log = np.log(df_close)
+    moving_avg = df_log.rolling(12).mean()
+    std_dev = df_log.rolling(12).std()
+    plt.legend(loc='best')
+    plt.title('Moving Average')
+    plt.plot(std_dev, color="black", label="Standard Deviation")
+    plt.plot(moving_avg, color="red", label="Mean")
+    plt.legend()
+    st.subheader("Figure 3")
+    st.pyplot(summary_fig)
+    # split data into train and training set
+    train_data, test_data = df_log[3:int(len(df_log) * 0.9)], df_log[int(len(df_log) * 0.9):]
+    predict_fig = plt.figure(figsize=(10, 6))
+    plt.grid(True)
+    plt.xlabel('Dates')
+    plt.ylabel('Closing Prices')
+    plt.plot(df_log, 'green', label='Train data')
+    plt.plot(test_data, 'blue', label='Test data')
+    plt.legend()
+    st.subheader("Figure 4")
+    st.pyplot(predict_fig)
+
+    model_autoARIMA = auto_arima(train_data, start_p=0, start_q=0,
+                                 test='adf',  # use adftest to find             optimal 'd'
+                                 max_p=3, max_q=3,  # maximum p and q
+                                 m=1,  # frequency of series
+                                 d=None,  # let model determine 'd'
+                                 seasonal=False,  # No Seasonality
+                                 start_P=0,
+                                 D=0,
+                                 trace=True,
+                                 error_action='ignore',
+                                 suppress_warnings=True,
+                                 stepwise=True)
+
+    fig_5 = model_autoARIMA.plot_diagnostics(figsize=(15, 8))
+
+    st.write(fig_5)
+
+    model = ARIMA(train_data, order=(3, 1, 2))
+    fitted = model.fit(disp=-1)
+
+    # Forecast
+    fc, se, conf = fitted.forecast(51, alpha=0.05)  # 95% confidence
+    fc_series = pd.Series(fc, index=test_data.index)
+    lower_series = pd.Series(conf[:, 0], index=test_data.index)
+    upper_series = pd.Series(conf[:, 1], index=test_data.index)
+    wap = plt.figure(figsize=(12, 5), dpi=100)
+    plt.plot(train_data, label='training')
+    plt.plot(test_data, color='blue', label='Actual Stock Price')
+    plt.plot(fc_series, color='orange', label='Predicted Stock Price')
+    plt.fill_between(lower_series.index, lower_series, upper_series,
+                     color='k', alpha=.10)
+    plt.title('Altaba Inc. Stock Price Prediction')
+    plt.xlabel('Time')
+    plt.ylabel('Actual Stock Price')
+    plt.legend(loc='upper left', fontsize=8)
+    st.pyplot(wap)
 
 
 
-        # report performance
-        mse = mean_squared_error(test_data, fc)
-        st.write('MSE: ' + str(mse))
-        mae = mean_absolute_error(test_data, fc)
-        st.write('MAE: ' + str(mae))
-        rmse = math.sqrt(mean_squared_error(test_data, fc))
-        st.write('RMSE: ' + str(rmse))
-        mape = np.mean(np.abs(fc - test_data) / np.abs(test_data))
-        st.write('MAPE: ' + str(mape))
+
+
+    # report performance
+    mse = mean_squared_error(test_data, fc)
+    st.write('MSE: ' + str(mse))
+    mae = mean_absolute_error(test_data, fc)
+    st.write('MAE: ' + str(mae))
+    rmse = math.sqrt(mean_squared_error(test_data, fc))
+    st.write('RMSE: ' + str(rmse))
+    mape = np.mean(np.abs(fc - test_data) / np.abs(test_data))
+    st.write('MAPE: ' + str(mape))
