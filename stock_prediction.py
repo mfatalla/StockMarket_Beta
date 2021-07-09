@@ -238,7 +238,6 @@ def stock_predict(tickerinput):
         with P1_3:
             st.write("")
 
-
         model = ARIMA(train_data, order=(3, 1, 2))
         fitted = model.fit(disp=-1)
 
@@ -266,6 +265,9 @@ def stock_predict(tickerinput):
         rmse = math.sqrt(mean_squared_error(test_data, fc))
 
         mape = np.mean(np.abs(fc - test_data) / np.abs(test_data))
+
+        st.write(test_data)
+        st.write(fc_series)
 
         P1_1, P1_2, P1_3 = st.beta_columns([1,3,1])
         with P1_1:
