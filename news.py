@@ -59,7 +59,11 @@ def News(asset):
                 trend_df.loc[trend_length] = trend_row_data
 
             trend_df.set_index('Symbol', inplace=False)
-            st.subheader("Trending")
+
+            sub_head1 = 'Trending Ticker'
+            st.markdown(
+                f"<p style='vertical-align:bottom;font-weight: bold; color: #D10000;font-size: 13px;'>{sub_head1}</p>",
+                unsafe_allow_html=True)
             st.table(trend_df)
         with col3:
             st.write("")
