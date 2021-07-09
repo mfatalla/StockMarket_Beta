@@ -290,14 +290,12 @@ def stock_predict(tickerinput):
         Fmape = '{0:.3f}'.format(mape)
         st.write('MAPE: '+Fmape)
 
-        first_col_1 = ['streamlit', 'pandas', 'request', 'bs4', 'beautifulsoup4', 'lmxl', 'yfinance', 'plotly', 'numpy',
-                     'matploblib', 'yahooquery', 'plotly', 'statsmodel', 'pmdarima', 'scikit-learn']
-        second_col_1 = ['0.84.0', '1.2.4', '2.25.1', '0.0.1', '4.9.3', '4.6.3', '0.1.59', '4.14.3', '1.20.2', '3.4.2',
-                      '2.2.15', '4.14.3', '0.12.2', '1.8.2', '0.24.2']
+        first_col_1 = ['streamlit', 'pandas', 'request', 'bs4']
+        second_col_1 = [mse,mae,rmse,mape]
         requirements = pd.DataFrame(
             {"Dependencies": list(first_col_1), "Version": list(second_col_1)})
         requirements.index = [""] * len(requirements)
-        st.subheader("Requirements")
+        st.subheader("Accuracy Metric")
         st.table(requirements)
 
         submitted = st.form_submit_button(label='Hey')
