@@ -283,6 +283,8 @@ def Scrappy(tickerinput):
 
         ticker_input_2 = yf.Ticker(tickerinput)
         datatest = ticker_input_2.history(period=periodT, interval=intervalT)
+        st.table(datatest)
+        st.dataframe(datatest)
 
         def download_link(object_to_download, download_filename, download_link_text):
 
