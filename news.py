@@ -86,7 +86,10 @@ def News(asset):
                 trend_row_data = [trend_td.text.strip() for trend_td in trend_data]
                 trend_length = len(trend_df)
                 trend_df.loc[trend_length] = trend_row_data
-            st.subheader("Top Gainers")
+            sub_head1 = 'Trending Ticker'
+            st.markdown(
+                f"<p style='vertical-align:bottom;font-weight: bold; color: #FFA500;font-size: 20px;'>{sub_head1}</p>",
+                unsafe_allow_html=True)
             st.table(trend_df)
         with col5:
             st.write("")
@@ -109,7 +112,10 @@ def News(asset):
                 trend_row_data = [trend_td.text.strip() for trend_td in trend_data]
                 trend_length = len(trend_df)
                 trend_df.loc[trend_length] = trend_row_data
-            st.subheader("Top Losers")
+            sub_head1 = 'Top Gainers'
+            st.markdown(
+                f"<p style='vertical-align:bottom;font-weight: bold; color: #D10000;font-size: 20px;'>{sub_head1}</p>",
+                unsafe_allow_html=True)
             st.table(trend_df)
         with col7:
             st.write("")
