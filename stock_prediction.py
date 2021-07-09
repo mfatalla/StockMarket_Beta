@@ -283,7 +283,7 @@ def stock_predict(tickerinput):
         Fmape = '{0:.2f}'.format(mape)
 
         first_col_1 = ['Mean Square Error', 'Mean Absolute Error', 'Root Mean Square Error', 'Mean Absolute Percetage Error']
-        second_col_1 = [100-mse+' %',100-mae+' %',100-rmse+' %',100-mape+' %']
+        second_col_1 = [100-Fmse+' %',100-Fmae+' %',100-Frmse+' %',100-Fmape+' %']
         third_col_1 = [Fmse+' %',Fmae+' %',Frmse+' %',Fmape+' %']
         requirements = pd.DataFrame(
             {"Accuracy Metric": list(first_col_1), "Percentage Error": list(third_col_1),"Accuracy Rate": list(second_col_1)})
