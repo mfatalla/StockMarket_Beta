@@ -62,7 +62,7 @@ def News(asset):
 
             sub_head1 = 'Trending Ticker'
             st.markdown(
-                f"<p style='vertical-align:bottom;font-weight: bold; color: #D10000;font-size: 13px;'>{sub_head1}</p>",
+                f"<p style='vertical-align:bottom;font-weight: bold; color: #D10000;font-size: 20px;'>{sub_head1}</p>",
                 unsafe_allow_html=True)
             st.table(trend_df)
         with col3:
