@@ -74,15 +74,26 @@ with sidebar_components:
     change = soup.find('span', {'id': 'spd'}).text
     rate = soup.find('span', {'id': 'spd'}).find_next('span').text
     meta = soup.find('div', {'id': 'sti'}).find('span').text
-    after = soup.find('div', {'id': 'ext'}).find_next('span').text
-    after2 = soup.find('span', {'id': 'extc'}).text
-    aftert = soup.find('span', {'id': 'extcp'}).text
-    aftertime = soup.find('span', {'id': 'exttime'}).text
-    CR = change + " (" + rate + ")"
-    CT = after2 + " (" + aftert + ")"
-    sub = change
-    sub2 = after2
-    aye = ": After-hours"
+    try:
+        after = soup.find('div', {'id': 'ext'}).find_next('span').text
+        after2 = soup.find('span', {'id': 'extc'}).text
+        aftert = soup.find('span', {'id': 'extcp'}).text
+        aftertime = soup.find('span', {'id': 'exttime'}).text
+        CR = change + " (" + rate + ")"
+        CT = after2 + " (" + aftert + ")"
+        sub = change
+        sub2 = after2
+        aye = ": After-hours"
+    except AttributeError as attriErr:
+        after = "NO DATA"
+        after2 = "NO DATA"
+        aftert = "NO DATA"
+        aftertime = "NO DATA"
+        CR = "NO DATA"
+        CT = "NO DATA"
+        sub = "NO DATA"
+        sub2 = "NO DATA"
+        aye = "NO DATA"
 
     formtab = st.sidebar.beta_container()
     with formtab:
