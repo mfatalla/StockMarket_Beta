@@ -56,6 +56,8 @@ def News(asset):
                 trend_length = len(trend_df)
                 trend_df.loc[trend_length] = trend_row_data
 
+            trend_df.set_index('Symbols', inplace=True)
+
             st.table(trend_df)
         with col2:
             trend_url = 'https://stockanalysis.com/news/all-stocks/'
