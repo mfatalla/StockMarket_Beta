@@ -32,7 +32,7 @@ def stock_predict(tickerinput):
 
         v_T = ['6mo', '1y', '2y', '5y']
         history_args["period"] = st.selectbox(
-            "Select Period", options=v_T, index=8  # pylint: disable=protected-access
+            "Select Period", options=v_T, index=2
         )
 
         periodT_2 = history_args["period"]
@@ -53,7 +53,7 @@ def stock_predict(tickerinput):
     with intervalsT:
 
         history_args["interval"] = st.selectbox(
-            "Select Interval", options=v_I, index=8  # pylint: disable=protected-access
+            "Select Interval", options=v_I, index=0
         )
     intervalT = history_args["interval"]
     periodT = history_args["period"]
