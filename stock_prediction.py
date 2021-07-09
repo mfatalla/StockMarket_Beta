@@ -217,17 +217,10 @@ def stock_predict(tickerinput):
     st.write('MAPE: ' + str(mape))
 
 
-    Fmse = '{0:.2f}'.format(mse)
-    st.write(Fmse)
 
-    Fmae = '{0:.2f}'.format(mae)
-    st.write(Fmae)
-
-    Frmse = '{0:.2f}'.format(rmse)
-    st.write(Frmse)
 
     Fmape = '{0:.2f}'.format(mape)
-    st.write(Fmape)
+    st.write('MAPE: '+Fmape)
 
 
 
