@@ -290,10 +290,11 @@ def stock_predict(tickerinput):
         Fmape = '{0:.3f}'.format(mape)
         st.write('MAPE: '+Fmape)
 
-        mylist_1= ['A','B']
-        mylist_2 = ['A', 'B']
-        mylist_3 = []
-        mylist_4 = []
+        mylist_1 = ['A','B']
+        mylist_2 = ['A','B']
+        mylist_3 = ['A','B']
+        mylist_4 = ['A','B']
+
         final_tab = pd.DataFrame(
             {"Value": list(mylist_4),"Value": list(mylist_1), "Value": list(mylist_2), "Value": list(mylist_3)})
         final_tab.index = [""] * len(final_tab)
