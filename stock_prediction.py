@@ -91,7 +91,7 @@ def stock_predict(tickerinput):
 
     with st.form(key='my_form'):
         st.write("WAP")
-    submit_button = st.form_submit_button(label='Submit')
+        submit_button = st.form_submit_button(label='Submit')
 
     p1,p2,p3 = st.beta_columns([.5,3,.5])
     with p1:
