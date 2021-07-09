@@ -88,8 +88,6 @@ def stock_predict(tickerinput):
     ticker_input_2 = yf.Ticker(tickerinput)
     datatest = ticker_input_2.history(period=periodT, interval=intervalT)
 
-
-
     p1,p2,p3 = st.beta_columns([.5,3,.5])
     with p1:
         st.write("")
@@ -257,10 +255,7 @@ def stock_predict(tickerinput):
         plt.ylabel('Actual Stock Price')
         plt.legend(loc='upper left', fontsize=8)
 
-        st.write(train_data)
-        st.write(test_data)
-        st.write(fc_series)
-        # report performance
+
         mse = mean_squared_error(test_data, fc)
 
         mae = mean_absolute_error(test_data, fc)
