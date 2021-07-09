@@ -119,27 +119,26 @@ def stock_predict(tickerinput):
     with P1_1:
         st.write("")
     with P1_2:
-        st.subheader("Figure1")
+        st.subheader("Closing Price")
         st.pyplot(line_fig)
     with P1_3:
         st.write("")
 
-    P1_1, P1_2, P1_3 = st.beta_columns([1,3,1])
-    with P1_1:
-        st.write("")
-    with P1_2:
-        st.subheader("Figure1")
-        st.pyplot(line_fig)
-    with P1_3:
-        st.write("")
+
 
     df_close = datatest['Close']
     df_close.plot(style='k.')
     plt.title('Scatter plot of closing price')
     scatter_fig = line_fig
 
-    st.subheader("Figure 2")
-    st.pyplot(scatter_fig)
+    P1_1, P1_2, P1_3 = st.beta_columns([1,3,1])
+    with P1_1:
+        st.write("")
+    with P1_2:
+        st.subheader("Scatter Plot : Closing Price")
+        st.pyplot(scatter_fig)
+    with P1_3:
+        st.write("")
 
     def test_stationarity(timeseries):
         # Determing rolling statistics
@@ -166,8 +165,16 @@ def stock_predict(tickerinput):
     summary_fig = plt.figure()
     summary_fig = result.plot()
     summary_fig.set_size_inches(16, 9)
-    st.subheader("Figure 3")
-    st.pyplot(summary_fig)
+
+    P1_1, P1_2, P1_3 = st.beta_columns([1,3,1])
+    with P1_1:
+        st.write("")
+    with P1_2:
+        st.subheader("Seasonal and Trend")
+        st.pyplot(summary_fig)
+    with P1_3:
+        st.write("")
+
 
     rcParams['figure.figsize'] = (10, 6)
     df_log = np.log(df_close)
@@ -179,7 +186,7 @@ def stock_predict(tickerinput):
     plt.plot(moving_avg, color="red", label="Mean")
     plt.legend()
 
-    st.subheader("Figure 4")
+
     # split data into train and training set
     train_data, test_data = df_log[3:int(len(df_log) * 0.9)], df_log[int(len(df_log) * 0.9):]
     predict_fig = plt.figure(figsize=(10, 6))
@@ -190,7 +197,14 @@ def stock_predict(tickerinput):
     plt.plot(test_data, 'blue', label='Test data')
     plt.legend()
 
-    st.pyplot(predict_fig)
+    P1_1, P1_2, P1_3 = st.beta_columns([1,3,1])
+    with P1_1:
+        st.write("")
+    with P1_2:
+        st.subheader("Trained & Test Data")
+        st.pyplot(predict_fig)
+    with P1_3:
+        st.write("")
 
     model_autoARIMA = auto_arima(train_data, start_p=0, start_q=0,
                                  test='adf',  # use adftest to find             optimal 'd'
@@ -207,8 +221,15 @@ def stock_predict(tickerinput):
 
     fig_5 = model_autoARIMA.plot_diagnostics(figsize=(15, 8))
 
-    st.subheader("Figure 5")
-    st.write(fig_5)
+    P1_1, P1_2, P1_3 = st.beta_columns([1,3,1])
+    with P1_1:
+        st.write("")
+    with P1_2:
+        st.subheader("ARIMA Model")
+        st.write(fig_5)
+    with P1_3:
+        st.write("")
+
 
     model = ARIMA(train_data, order=(3, 1, 2))
     fitted = model.fit(disp=-1)
@@ -238,8 +259,15 @@ def stock_predict(tickerinput):
 
     mape = np.mean(np.abs(fc - test_data) / np.abs(test_data))
 
-    st.subheader("Figure 6")
-    st.pyplot(fig_6)
+    P1_1, P1_2, P1_3 = st.beta_columns([1,3,1])
+    with P1_1:
+        st.write("")
+    with P1_2:
+        st.subheader("Stock Price Prediction")
+        st.pyplot(fig_6)
+    with P1_3:
+        st.write("")
+
 
     Fmse = '{0:.3f}'.format(mse)
     st.write('MSE: '+Fmse)
